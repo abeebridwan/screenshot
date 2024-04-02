@@ -17,13 +17,12 @@ This Node.js script captures screenshots of a webpage using Puppeteer. It allows
    npm i
 
    # If using yarn
-   yarn 
-```   
+   yarn
+```
 
 ## Usage
 
 1. Run the script using Node.js and provide the URL of the webpage you want to capture screenshots of as a command line argument:
-
 
 Replace `<URL>` with the URL of the webpage you want to capture screenshots of.
 
@@ -38,10 +37,11 @@ Replace `<URL>` with the URL of the webpage you want to capture screenshots of.
 ## Example
 
 To capture screenshots of the webpage `https://shellshock.io`, run the following command:
+
 ```
 node screenshot.js https://shellshock.io
 
-wait until see the following for complete loading:
+wait until see the following text for complete loading:
 
 Press `Print Screen` or `o` to take a screenshot of the game.
 
