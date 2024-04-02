@@ -8,7 +8,7 @@ This Node.js script captures screenshots of a webpage using Puppeteer. It allows
 
 ## Installation
 
-1. Clone this repository or download the script (`screenshots.js`) directly.
+1. Clone this repository or download the script (`screenshot.js`) directly.
 
 2. Install dependencies by running the following command in your terminal at root of the repo:
 
