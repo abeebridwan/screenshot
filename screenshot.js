@@ -29,7 +29,7 @@ async function captureMultipleScreenshots() {
         console.log(`Press ${hotkey} to take a screenshot of the game.`); // when the page loads and ready
         process.stdin.on('keypress', (ch, key) => {
             if (key && key.name == hotkey) {
-                page.screenshot({ path: `screenshots/game-${id}.webp` })
+                page.screenshot({ path: `screenshots/game-${id}.webp`, fullPage: true })
                 console.log(`\n🎉 ${id} screenshot captured successfully.`);
                 id++
             }
