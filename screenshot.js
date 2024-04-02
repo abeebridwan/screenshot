@@ -25,7 +25,7 @@ async function captureMultipleScreenshots(url) {
 
         let id = 1
         keypress(process.stdin);
-        const hotkey = process.platform === 'win32' ? 'printscreen' : 'o'; // Hotkey for Windows or Linux
+        const hotkey = 'o'; // Hotkey for all platforms
         console.log(`Press ${hotkey} to take a screenshot of the game.`); // appears the page loads and ready
         process.stdin.on('keypress', (ch, key) => {
             if (key && key.name == hotkey) {
