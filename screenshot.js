@@ -2,7 +2,7 @@ const fs = require("fs");
 const puppeteer = require("puppeteer");
 const keypress = require('keypress');
 
-async function captureMultipleScreenshots() {
+async function captureMultipleScreenshots(url) {
     if (!fs.existsSync("screenshots")) {
         fs.mkdirSync("screenshots");
     }
@@ -21,7 +21,7 @@ async function captureMultipleScreenshots() {
             width: 1280, height: 720
         });
 
-        await page.goto('https://shellshock.io');
+        await page.goto(url);
 
         let id = 1
         keypress(process.stdin);
@@ -38,7 +38,6 @@ async function captureMultipleScreenshots() {
             }
         });
 
-
         process.stdin.setRawMode(true);
         process.stdin.resume();
     } catch (err) {
@@ -46,4 +45,11 @@ async function captureMultipleScreenshots() {
     }
 }
 
-captureMultipleScreenshots();
+// Check if URL is provided as an argument
+const url = process.argv[2];
+if (!url) {
+    console.log("Please provide a URL as a command line argument.");
+    process.exit(1);
+}
+
+captureMultipleScreenshots(url);
