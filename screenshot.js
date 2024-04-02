@@ -13,7 +13,7 @@ async function captureMultipleScreenshots() {
         // Create a new page
         const page = await browser.newPage();
 
-        // set naivagation time to zero
+        // set Navigation time to zero
         page.setDefaultNavigationTimeout(0);
 
         // Set viewport width and height
@@ -26,7 +26,7 @@ async function captureMultipleScreenshots() {
         let id = 1
         keypress(process.stdin);
         const hotkey = process.platform === 'win32' ? 'printscreen' : 'o'; // Hotkey for Windows or Linux
-        console.log(`Press ${hotkey} to take a screenshot of the game.`); // when the page loads and ready
+        console.log(`Press ${hotkey} to take a screenshot of the game.`); // appears the page loads and ready
         process.stdin.on('keypress', (ch, key) => {
             if (key && key.name == hotkey) {
                 page.screenshot({ path: `screenshots/game-${id}.webp`, fullPage: true })
