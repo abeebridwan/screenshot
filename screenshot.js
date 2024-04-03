@@ -8,17 +8,13 @@ async function captureScreenshots() {
   let browser;
   try {
     // Launch headless Chromium browser
-    browser = await puppeteer.launch({ headless: false });
+    browser = await puppeteer.launch({ headless: false, defaultViewport: null });
     // Create a new page
     const page = await browser.newPage();
 
     // set Navigation time to zero
     page.setDefaultNavigationTimeout(0);
-
-    // Set viewport width and height
-    await page.setViewport({
-      width: 1280, height: 720
-    });
+    
 
     // Inject JavaScript code into the page to listen for the keypress event
     await injectKeyPressListener(page);
