@@ -5,7 +5,6 @@ async function captureScreenshots() {
   if (!fs.existsSync("screenshots")) {
     fs.mkdirSync("screenshots");
   }
-  let isScreenshotInProgress = false;
   let browser;
   try {
     // Launch headless Chromium browser
