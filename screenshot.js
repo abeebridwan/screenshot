@@ -1,6 +1,5 @@
 const fs = require("fs");
 const puppeteer = require("puppeteer");
-const keypress = require('keypress');
 
 async function captureMultipleScreenshots(url) {
     if (!fs.existsSync("screenshots")) {
@@ -23,26 +22,28 @@ async function captureMultipleScreenshots(url) {
 
         await page.goto(url);
 
-        keypress(process.stdin);
-        const hotkey = 'o'; // Hotkey for all platforms
-        console.log(`Press ${hotkey} to take a screenshot of the game.`); // appears the page loads and ready
-        process.stdin.on('keypress', (ch, key) => {
-            if (key && key.name == hotkey) {
-                const currentDateTime = new Date().toLocaleString();
-                const timeArray = currentDateTime.split(', ');
-                const formattedDate = timeArray[0].replace(/\//g, '-');
-                const formattedTime = timeArray[1].replace(/:/g, '-');
-                const fileName = `${formattedDate}T${formattedTime}`;
-                page.screenshot({ path: `screenshots/${fileName}.webp`, fullPage: false });
-                console.log(`\n🎉 Screenshot captured successfully with name: ${fileName}.webp`);
-            }
-            if (key && key.ctrl && key.name == 'c') {
-                process.exit();
-            }
+        // Inject JavaScript code into the page to listen for the keypress event
+        await page.evaluate(() => {
+            document.addEventListener('keypress', (event) => {
+                if (event.key === 'o') {
+                    const currentDateTime = new Date().toLocaleString();
+                    const timeArray = currentDateTime.split(', ');
+                    const formattedDate = timeArray[0].replace(/\//g, '-');
+                    const formattedTime = timeArray[1].replace(/:/g, '-');
+                    const fileName = `${formattedDate}T${formattedTime}`;
+                    console.log(`takeScreenshot_${fileName}`)
+                }
+            });
         });
 
-        process.stdin.setRawMode(true);
-        process.stdin.resume();
+        // Listen for the console event dispatched by the page
+        page.on('console', async (msg) => {
+            if (msg.text().split("_")[0] === 'takeScreenshot') {
+                const fileName = msg.text().split("_")[1];
+                await page.screenshot({ path: `screenshots/${fileName}.webp`, fullPage: false });
+                console.log(`\n🎉 Screenshot captured successfully with name: ${fileName}.webp`);
+            }
+        });
     } catch (err) {
         console.log("❌ Error: ", err.message);
     }
