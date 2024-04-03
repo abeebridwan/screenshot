@@ -23,15 +23,18 @@ async function captureMultipleScreenshots(url) {
 
         await page.goto(url);
 
-        let id = 1
         keypress(process.stdin);
         const hotkey = 'o'; // Hotkey for all platforms
         console.log(`Press ${hotkey} to take a screenshot of the game.`); // appears the page loads and ready
         process.stdin.on('keypress', (ch, key) => {
             if (key && key.name == hotkey) {
-                page.screenshot({ path: `screenshots/game-${id}.webp`, fullPage: false })
-                console.log(`\n🎉 ${id} screenshot captured successfully.`);
-                id++
+                const currentDateTime = new Date().toLocaleString();
+                const timeArray = currentDateTime.split(', ');
+                const formattedDate = timeArray[0].replace(/\//g, '-');
+                const formattedTime = timeArray[1].replace(/:/g, '-');
+                const fileName = `${formattedDate}T${formattedTime}`;
+                page.screenshot({ path: `screenshots/${fileName}.webp`, fullPage: false });
+                console.log(`\n🎉 Screenshot captured successfully with name: ${fileName}.webp`);
             }
             if (key && key.ctrl && key.name == 'c') {
                 process.exit();
